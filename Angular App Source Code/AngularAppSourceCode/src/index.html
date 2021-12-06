@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Atlantis</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/atlantis.min.css">
+  <style>
+    .main-panel{
+    position: relative;
+    width: 100% !important;
+    height: 100vh;
+    min-height: 100%;
+    float: right;
+    transition: all .3s;
+}
+  </style>
+</head>
+<body>
+  <app-dashboard2 country=""></app-dashboard2>
+  <!-- <app-dashboard2 country=""></app-dashboard2> -->
+  <script src="assets/js/core/jquery.3.2.1.min.js"></script>
+	<script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  
+</body>
+</html>
+
+<script>
+  $(document).ready(function(){
+
+   
+      var ele = document.querySelector("app-dashboard2");
+    debugger;
+   ele.addEventListener("change",function(ev){
+     debugger;
+   })
+   
+   
+  })
+</script>
