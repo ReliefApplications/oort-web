@@ -5,6 +5,11 @@
 	<title>Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'>
 	
+  <!-- msal.js with a fallback to backup CDN -->
+  <script type="text/javascript" src="https://alcdn.msauth.net/lib/1.2.1/js/msal.js" integrity="sha384-9TV1245fz+BaI+VvCjMYL0YDMElLBwNS84v3mY57pXNOt6xcUYch2QLImaTahcOP" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    if(typeof Msal === 'undefined')document.write(unescape("%3Cscript src='https://alcdn.msftauth.net/lib/1.2.1/js/msal.js' type='text/javascript' integrity='sha384-m/3NDUcz4krpIIiHgpeO0O8uxSghb+lfBTngquAo2Zuy2fEF+YgFeP08PWFo5FiJ' crossorigin='anonymous'%3E%3C/script%3E"));
+  </script>
 
   <!-- CSS Files -->
   <link rel="shortcut icon" href="#">
@@ -39,18 +44,18 @@
 				
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-				
-           
-						
-						</li> 
-					
+            <li class="nav-item dropdown hidden-caret">
+              <button type="button" id="signIn" class="btn btn-secondary" onclick="signIn()">Sign In</button>
+              <button type="button" id="signOut" class="btn btn-success d-none" onclick="signOut()">Sign Out</button>
+            </li> 
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div onclick="componentToShow('app-dashboard1')" class="avatar-sm d-flex align-items-center">
                   <i class="fa fa-calendar text-white mx-auto" aria-hidden="true"></i>
 								</div>
               </a>
-              <li class="nav-item dropdown hidden-caret">
+						</li> 
+            <li class="nav-item dropdown hidden-caret">
               <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div onclick="componentToShow('app-dashboard2')" class="avatar-sm d-flex align-items-center">
                   <i class="fas fa-exclamation-triangle text-white mx-auto"></i>
@@ -64,8 +69,6 @@
 								</div>
               </a>
             </li>
-					
-						</li> 
 					</ul>
 				</div>
 			</nav>
@@ -1473,7 +1476,11 @@ $.each(emergencydata.data.incidents, function (index, value) {
    </script>
  
  
- <script id="scriptcntl" src="assets/js/dashboard1.js" ></script>
-
+  <script id="scriptcntl" src="assets/js/dashboard1.js" ></script>
+  <!-- importing app scripts (load order is important) -->
+  <script type="text/javascript" src="assets/js/authConfig.js"></script>
+  <script type="text/javascript" src="assets/js/graphConfig.js"></script>
+  <script type="text/javascript" src="assets/js/authRedirect.js"></script>
+  <script type="text/javascript" src="assets/js/graph.js"></script>
 </body>
 </html>
