@@ -1,9 +1,9 @@
 const msalConfig = {
     auth: {
-      clientId: "8e237c86-3d84-4dda-b38d-b92031d77af1",
-      authority: "https://login.microsoftonline.com/f610c0b7-bd24-4b39-810b-3dc280afb590",
-      redirectUri: "https://ems-safe.who.int",
-      postLogoutRedirectUri: 'https://ems-safe.who.int/auth',
+      clientId: "d62083d8-fdc0-4a6a-8618-652380eebdb9",
+      authority: "https://login.microsoftonline.com/fbacd48d-ccf4-480d-baf0-31048368055f",
+      redirectUri: "http://localhost:4200",
+      postLogoutRedirectUri: 'http://localhost:4200',
     },
     cache: {
       cacheLocation: "sessionStorage", // This configures where the cache will be stored
