@@ -1,283 +1,307 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>App Builder - Web Element POC</title>
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'>
-	
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>App Builder - Web Element POC</title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'>
+
   <!-- IE support: add promises polyfill before msal.js  -->
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/bluebird@3.7.2/js/browser/bluebird.min.js"></script>
-  <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.0.0-beta.4/js/msal-browser.js" integrity="sha384-7sxY2tN3GMVE5jXH2RL9AdbO6s46vUh9lUid4yNCHJMUzDoj+0N4ve6rLOmR88yN" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.0.0-beta.4/js/msal-browser.js"
+    integrity="sha384-7sxY2tN3GMVE5jXH2RL9AdbO6s46vUh9lUid4yNCHJMUzDoj+0N4ve6rLOmR88yN"
+    crossorigin="anonymous"></script>
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- CSS Files -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="assets/css/web-element.styles.css">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/atlantis.min.css">
 
   <script src="assets/js/font-awesome.js"></script>
 </head>
+
 <body>
-	<div class="wrapper">
-		<div class="main-header">
-			<!-- Logo Header -->
-			<div class="logo-header" data-background-color="blue">
+  <div class="wrapper">
+    <div class="main-header">
+      <!-- Logo Header -->
+      <div class="logo-header" data-background-color="blue">
 
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="icon-menu"></i>
-					</span>
-				</button>
-				<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
-				<div class="nav-toggle">
-					<button class="btn btn-toggle toggle-sidebar">
-						<i class="icon-menu"></i>
-					</button>
-				</div>
-			</div>
-			<!-- End Logo Header -->
+        <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+          data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon">
+            <i class="icon-menu"></i>
+          </span>
+        </button>
+        <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+        <div class="nav-toggle">
+          <button class="btn btn-toggle toggle-sidebar">
+            <i class="icon-menu"></i>
+          </button>
+        </div>
+      </div>
+      <!-- End Logo Header -->
 
-			<!-- Navbar Header -->
-			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-				
-				<div class="container-fluid">
-					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+      <!-- Navbar Header -->
+      <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+
+        <div class="container-fluid">
+          <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <li class="nav-item dropdown hidden-caret">
               <button type="button" id="SignIn" class="btn btn-secondary" onclick="signIn()">
                 Sign In
               </button>
             </li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
-								<div onclick="componentToShow('app-dashboard1')" class="avatar-sm d-flex align-items-center">
+            <li class="nav-item dropdown hidden-caret">
+              <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+                <div onclick="componentToShow('safe-dashboard')" class="avatar-sm d-flex align-items-center">
                   <i class="fa fa-calendar text-white mx-auto" aria-hidden="true"></i>
-								</div>
+                </div>
               </a>
-						</li> 
+            </li>
             <li class="nav-item dropdown hidden-caret">
               <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
-								<div onclick="componentToShow('app-dashboard2')" class="avatar-sm d-flex align-items-center">
+                <div onclick="componentToShow('app-dashboard2')" class="avatar-sm d-flex align-items-center">
                   <i class="fas fa-exclamation-triangle text-white mx-auto"></i>
-								</div>
+                </div>
               </a>
             </li>
             <li class="nav-item dropdown hidden-caret">
               <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
-								<div onclick="componentToShow('app-dashboard1')" class="avatar-sm d-flex align-items-center">
+                <div onclick="componentToShow('safe-dashboard')" class="avatar-sm d-flex align-items-center">
                   <i class="fas fa-cog text-white mx-auto"></i>
-								</div>
+                </div>
               </a>
             </li>
-					</ul>
-				</div>
-			</nav>
-			<!-- End Navbar -->
-		</div>
+          </ul>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+    </div>
 
-		<!-- Sidebar -->
+    <!-- Sidebar -->
 
-		<div class="sidebar" id="sidebar">
-			<div class="sidebar-wrapper scrollbar scrollbar-inner">
-				<div class="sidebar-content">
-					<div class="user">
-						
-						<div class="info" style="text-align: center;">
-							<span class="user-name" id="lblusername">-</span>
-							<div class="clearfix"></div>
-						</div>
-					</div>
-					<ul class="nav nav-primary region-list">
-						<li class="nav-item region-specific">
-							<a data-toggle="collapse" href="#submenu1" id="PositionMenuHead">
-								<i class="fas fa-globe"></i>
-								<p>Select a Position</p>
-								<span class="caret"></span>
-							</a>
-							<form class="collapse show" id="submenu1" style="padding:10px;">
-								<select id="position" onchange="setDashBoardData('position')" name="Position" class="custom-select mb-3">
-								</select>								
-							</form>
-						</li>
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+          <div class="user">
 
-						<li class="nav-item region-specific">
-							<a data-toggle="collapse" href="#submenu" id="LocationsMenuHead">
-								<i class="fas fa-globe"></i>
-								<p>Select a Region/Country</p>
-								<span class="caret"></span>
-							</a>
-							<form class="collapse show" id="submenu" style="padding:10px;">
-								<select id="region" onchange="setDashBoardData('region')" name="regions" class="custom-select mb-3">
-									<option value="A" selected>All Regions</option>
-								</select>
-								<select id="country" onchange="setDashBoardData('country')" name="country" class="custom-select mb-3">
-									<option selected>Select Country</option>
-								</select>
-							</form>
-						</li>
+            <div class="info" style="text-align: center;">
+              <span class="user-name" id="lblusername">-</span>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <ul class="nav nav-primary region-list">
+            <li class="nav-item region-specific">
+              <a data-toggle="collapse" href="#submenu1" id="PositionMenuHead">
+                <i class="fas fa-globe"></i>
+                <p>Select a Position</p>
+                <span class="caret"></span>
+              </a>
+              <form class="collapse show" id="submenu1" style="padding:10px;">
+                <select id="position" onchange="setDashBoardData('position')" name="Position"
+                  class="custom-select mb-3">
+                </select>
+              </form>
+            </li>
+
+            <li class="nav-item region-specific">
+              <a data-toggle="collapse" href="#submenu" id="LocationsMenuHead">
+                <i class="fas fa-globe"></i>
+                <p>Select a Region/Country</p>
+                <span class="caret"></span>
+              </a>
+              <form class="collapse show" id="submenu" style="padding:10px;">
+                <select id="region" onchange="setDashBoardData('region')" name="regions" class="custom-select mb-3">
+                  <option value="A" selected>All Regions</option>
+                </select>
+                <select id="country" onchange="setDashBoardData('country')" name="country" class="custom-select mb-3">
+                  <option selected>Select Country</option>
+                </select>
+              </form>
+            </li>
             <li class="nav-item active submenu emergency-specific">
               <a data-toggle="collapse" id="EmergenciesMenuHead" href="#sidebarLayouts">
-              <i class="fas fa-exclamation-circle"></i>
-              <p id='emergencyTag' class="dashboard2">Select an emergency</p>
-              <p id='emergencyTag' class="dashboard1">Signals</p>
-              <span class="caret"></span>
+                <i class="fas fa-exclamation-circle"></i>
+                <p id='emergencyTag' class="dashboard2">Select an emergency</p>
+                <p id='emergencyTag' class="dashboard1">Signals</p>
+                <span class="caret"></span>
               </a>
-              
-              <a data-toggle="collapse" id="ConflictResoltionHead" href="#ConflictsidebarLayouts" style="display: none;">
-              <i class="fas fa-exclamation-circle"></i>
-              <p>Conflict Resolution Mode</p>
-              <span class="caret"></span>
+
+              <a data-toggle="collapse" id="ConflictResoltionHead" href="#ConflictsidebarLayouts"
+                style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Conflict Resolution Mode</p>
+                <span class="caret"></span>
               </a>
               <div class="collapse show" id="ConflictsidebarLayouts" style="display: none;">
-              <ul class="nav nav-collapse subnav" id="Conflictsmenu"></ul>
+                <ul class="nav nav-collapse subnav" id="Conflictsmenu"></ul>
               </div>
               <div class="collapse show" id="sidebarLayouts">
-              <ul class="nav nav-collapse" class="dashboard1" id="EmergenciesMenu1" style="list-style-type:none; display:none;">
-                <li class="Incidents" data-incident="288" data-incidentname="Country G Floods">
-                  <a data-toggle="collapse" href="#subnav288">
-                    <span  onclick="setDashBoardData('emergency','Country G Floods')" class="sub-item G3">Country G Floods</span>
-                    <span class="caret"></span></a><div class="collapse" id="subnav288">
+                <ul class="nav nav-collapse" class="dashboard1" id="EmergenciesMenu1"
+                  style="list-style-type:none; display:none;">
+                  <li class="Incidents" data-incident="288" data-incidentname="Country G Floods">
+                    <a data-toggle="collapse" href="#subnav288">
+                      <span onclick="setDashBoardData('emergency','Country G Floods')" class="sub-item G3">Country G
+                        Floods</span>
+                      <span class="caret"></span></a>
+                    <div class="collapse" id="subnav288">
                       <ul class="nav nav-collapse subnav" id="menu_288"></ul>
                     </div>
                   </li>
-                    <li class="Incidents"  data-incident="237" data-incidentname="Global Cholera 2017 (Demo)">
-                      <a data-toggle="collapse" href="#subnav237">
-                      <span onclick="setDashBoardData('emergency','Global Cholera 2017 (Demo)')" class="sub-item G3">Global Cholera 2017 (Demo)</span>
-                      <span class="caret"></span></a><div class="collapse" id="subnav237">
-                        <ul class="nav nav-collapse subnav" id="menu_237">
+                  <li class="Incidents" data-incident="237" data-incidentname="Global Cholera 2017 (Demo)">
+                    <a data-toggle="collapse" href="#subnav237">
+                      <span onclick="setDashBoardData('emergency','Global Cholera 2017 (Demo)')"
+                        class="sub-item G3">Global Cholera 2017 (Demo)</span>
+                      <span class="caret"></span></a>
+                    <div class="collapse" id="subnav237">
+                      <ul class="nav nav-collapse subnav" id="menu_237">
 
-                        </ul>
-                      </div>
-                    </li>
-                    <li class="Incidents"  data-incident="289" data-incidentname="Country H Food Insecurity Crisis">
-                      <a data-toggle="collapse" href="#subnav289">
-                        <span onclick="setDashBoardData('emergency','Country H Food Insecurity Crisis')" class="sub-item P3">Country H Food Insecurity Crisis</span>
-                        <span class="caret"></span>
-                      </a>
-                      <div class="collapse" id="subnav289">
-                        <ul class="nav nav-collapse subnav" id="menu_289"></ul>
-                      </div>
-                    </li>
-                    <li class="Incidents" data-incident="252"  data-incidentname="Country B Yellow Fever 2017 (Demo)">
-                      <a data-toggle="collapse" href="#subnav252">
-                        <span onclick="setDashBoardData('emergency','Country B Yellow Fever 2017 (Demo)')" class="sub-item P2">Country B Yellow Fever 2017 (Demo)</span>
-                        <span class="caret"></span></a>
-                        <div class="collapse" id="subnav252">
-                          <ul class="nav nav-collapse subnav" id="menu_252"></ul>
-                        </div>
-                      </li>
-                      <li class="Incidents"  data-incident="281" data-incidentname="Country D Volcano 2017 (Demo)">
-                        <a data-toggle="collapse" href="#subnav281">
-                          <span onclick="setDashBoardData('emergency','Country D Volcano 2017 (Demo)')" class="sub-item G2">Country D Volcano 2017 (Demo)</span>
-                          <span class="caret"></span></a><div class="collapse" id="subnav281">
-                            <ul class="nav nav-collapse subnav" id="menu_281"></ul>
-                          </div>
-                        </li>
-                        <li class="Incidents"  data-incident="290" data-incidentname="Country I Unknown Jaundice">
-                          <a data-toggle="collapse" href="#subnav290">
-                            <span onclick="setDashBoardData('emergency','Country I Unknown Jaundice')" class="sub-item G2">Country I Unknown Jaundice</span>
-                            <span class="caret"></span>
-                          </a>
-                          <div class="collapse" id="subnav290">
-                            <ul class="nav nav-collapse subnav" id="menu_290"></ul>
-                          </div>
-                        </li>
-                        <li class="Incidents"  data-incident="285" data-incidentname="Country F Dengue Fever">
-                          <a data-toggle="collapse" href="#subnav285">
-                          <span onclick="setDashBoardData('emergency','Country F Dengue Fever')" class="sub-item G2">Country F Dengue Fever</span>
-                          <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="subnav285">
-                          <ul class="nav nav-collapse subnav" id="menu_285"></ul>
-                        </div>
-                      </li>
-                      <li class="Incidents"  data-incident="284"  data-incidentname="Country E Hepatitis 2016">
-                        <a data-toggle="collapse" href="#subnav284">
-                          <span onclick="setDashBoardData('emergency','Country E Hepatitis 2016')" class="sub-item G1">Country E Hepatitis 2016</span>
-                          <span class="caret"></span></a><div class="collapse" id="subnav284">
-                            <ul class="nav nav-collapse subnav" id="menu_284"></ul>
-                          </div>
-                        </li>
-                          <li class="Incidents"  data-incident="293" data-incidentname="An ungraded emregency">
-                            <a data-toggle="collapse" href="#subnav293">
-                              <span onclick="setDashBoardData('emergency','An ungraded emregency')" class="sub-item ">An ungraded emregency</span>
-                              <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="subnav293">
-                              <ul class="nav nav-collapse subnav" id="menu_293">
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="Incidents" data-incident="289" data-incidentname="Country H Food Insecurity Crisis">
+                    <a data-toggle="collapse" href="#subnav289">
+                      <span onclick="setDashBoardData('emergency','Country H Food Insecurity Crisis')"
+                        class="sub-item P3">Country H Food Insecurity Crisis</span>
+                      <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="subnav289">
+                      <ul class="nav nav-collapse subnav" id="menu_289"></ul>
+                    </div>
+                  </li>
+                  <li class="Incidents" data-incident="252" data-incidentname="Country B Yellow Fever 2017 (Demo)">
+                    <a data-toggle="collapse" href="#subnav252">
+                      <span onclick="setDashBoardData('emergency','Country B Yellow Fever 2017 (Demo)')"
+                        class="sub-item P2">Country B Yellow Fever 2017 (Demo)</span>
+                      <span class="caret"></span></a>
+                    <div class="collapse" id="subnav252">
+                      <ul class="nav nav-collapse subnav" id="menu_252"></ul>
+                    </div>
+                  </li>
+                  <li class="Incidents" data-incident="281" data-incidentname="Country D Volcano 2017 (Demo)">
+                    <a data-toggle="collapse" href="#subnav281">
+                      <span onclick="setDashBoardData('emergency','Country D Volcano 2017 (Demo)')"
+                        class="sub-item G2">Country D Volcano 2017 (Demo)</span>
+                      <span class="caret"></span></a>
+                    <div class="collapse" id="subnav281">
+                      <ul class="nav nav-collapse subnav" id="menu_281"></ul>
+                    </div>
+                  </li>
+                  <li class="Incidents" data-incident="290" data-incidentname="Country I Unknown Jaundice">
+                    <a data-toggle="collapse" href="#subnav290">
+                      <span onclick="setDashBoardData('emergency','Country I Unknown Jaundice')"
+                        class="sub-item G2">Country I Unknown Jaundice</span>
+                      <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="subnav290">
+                      <ul class="nav nav-collapse subnav" id="menu_290"></ul>
+                    </div>
+                  </li>
+                  <li class="Incidents" data-incident="285" data-incidentname="Country F Dengue Fever">
+                    <a data-toggle="collapse" href="#subnav285">
+                      <span onclick="setDashBoardData('emergency','Country F Dengue Fever')" class="sub-item G2">Country
+                        F Dengue Fever</span>
+                      <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="subnav285">
+                      <ul class="nav nav-collapse subnav" id="menu_285"></ul>
+                    </div>
+                  </li>
+                  <li class="Incidents" data-incident="284" data-incidentname="Country E Hepatitis 2016">
+                    <a data-toggle="collapse" href="#subnav284">
+                      <span onclick="setDashBoardData('emergency','Country E Hepatitis 2016')"
+                        class="sub-item G1">Country E Hepatitis 2016</span>
+                      <span class="caret"></span></a>
+                    <div class="collapse" id="subnav284">
+                      <ul class="nav nav-collapse subnav" id="menu_284"></ul>
+                    </div>
+                  </li>
+                  <li class="Incidents" data-incident="293" data-incidentname="An ungraded emregency">
+                    <a data-toggle="collapse" href="#subnav293">
+                      <span onclick="setDashBoardData('emergency','An ungraded emregency')" class="sub-item ">An
+                        ungraded emregency</span>
+                      <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="subnav293">
+                      <ul class="nav nav-collapse subnav" id="menu_293">
 
-                              </ul>
-                            </div>
-                          </li>
-              </ul>
-              <ul class="nav nav-collapse show" id="EmergenciesMenu2" class="dashboard2" style="list-style-type:none;">
-                <li class="IncidentMenuli" style="cursor: pointer;">
-                  <a data-toggle="collapse" data-target="#subnav299">
-                    <span   class="sub-item G3">Page</span>
-                    <span class="caret"></span></a>
-                  
-                    <div class="collapse collapse show" id="subnav299" >
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+                <ul class="nav nav-collapse show" id="EmergenciesMenu2" class="dashboard2"
+                  style="list-style-type:none;">
+                  <li class="IncidentMenuli" style="cursor: pointer;">
+                    <a data-toggle="collapse" data-target="#subnav299">
+                      <span class="sub-item G3">Page</span>
+                      <span class="caret"></span></a>
+
+                    <div class="collapse collapse show" id="subnav299">
                       <ul class="nav nav-collapse subnav" id="menu_288">
-                        <li  onclick="setDashBoardData('emergency','dailyroutine')" class="IncidentMenuli">
-                          <a >
-                            <span   class="sub-item G3">Daily Routine</span>
+                        <li onclick="setDashBoardData('emergency','dailyroutine')" class="IncidentMenuli">
+                          <a>
+                            <span class="sub-item G3">Daily Routine</span>
                             <span class="caret"></span></a>
                         </li>
                         <li onclick="setDashBoardData('emergency','overview')" class="IncidentMenuli">
                           <a>
-                            <span   class="sub-item G3">Overview</span>
+                            <span class="sub-item G3">Overview</span>
                             <span class="caret"></span></a>
                         </li>
                         <li onclick="setDashBoardData('emergency','Set-up')" class="IncidentMenuli">
                           <a>
-                            <span   class="sub-item G3">Set-up</span>
+                            <span class="sub-item G3">Set-up</span>
                             <span class="caret"></span></a>
                         </li>
                       </ul>
                     </div>
-                    
-                </li>
-                <li class="IncidentMenuli" style="cursor: pointer;">
-                  <a data-toggle="collapse" data-target="#subnav300">
-                    <span   class="sub-item G3">Administration</span>
-                    <span class="caret"></span></a>
-                  
-                    <div class="collapse collapse show" id="subnav300" >
+
+                  </li>
+                  <li class="IncidentMenuli" style="cursor: pointer;">
+                    <a data-toggle="collapse" data-target="#subnav300">
+                      <span class="sub-item G3">Administration</span>
+                      <span class="caret"></span></a>
+
+                    <div class="collapse collapse show" id="subnav300">
                       <ul class="nav nav-collapse subnav" id="menu_288">
                         <li onclick="setDashBoardData('emergency','users')" class="IncidentMenuli">
                           <a>
-                            <span   class="sub-item G3">Users</span>
+                            <span class="sub-item G3">Users</span>
                             <span class="caret"></span></a>
                         </li>
                       </ul>
                     </div>
-                    
-                </li>
-              </ul>
-              </div>
-              </li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<!-- End Sidebar -->
-		
-		
-		<div class="dashboard1"  id="DivDashA">
-      <app-dashboard1></app-dashboard1>
-    </div>
-		<div class="dashboard2" style="display: none;" id="DivDashB">	
-   
-		<app-dashboard2></app-dashboard2>
-		</div>		
-			
-	</div>
-	<!--   Core JS Files   -->
-	<script src="assets/js/core/jquery.3.2.1.min.js"></script>
-	<script src="assets/js/core/bootstrap.min.js"></script>
 
-<script>
-  var component = "app-dashboard1";
-var ele =  document.querySelector(component);
-var userrolesList ={"userroles": [
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- End Sidebar -->
+
+
+    <div class="dashboard1" id="DivDashA">
+      <safe-dashboard></safe-dashboard>
+    </div>
+    <div class="dashboard2" style="display: none;" id="DivDashB">
+
+      <app-dashboard2></app-dashboard2>
+    </div>
+
+  </div>
+  <!--   Core JS Files   -->
+  <script src="assets/js/core/jquery.3.2.1.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+
+  <script>
+    var component = "safe-dashboard";
+    var ele = document.querySelector(component);
+    var userrolesList = {
+      "userroles": [
         {
           "userrole": {
             "id": 68,
@@ -292,1191 +316,1190 @@ var userrolesList ={"userroles": [
             "ordering": 1
           }
         }
-      ]};
-	
+      ]
+    };
 
- var countrylist = {
-  "data": {
-    "boardlistitems": [
-      {
-        "id": 4943,
-        "name": "WHO_Regions",
-        "child": [
+
+    var countrylist = {
+      "data": {
+        "boardlistitems": [
           {
-            "id": 4944,
-            "name": "",
-            "child": null
-          },
-          {
-            "id": 4945,
-            "name": "AFRO",
+            "id": 4943,
+            "name": "WHO_Regions",
             "child": [
               {
-                "id": 5753,
-                "name": ""
-              },
-              {
-                "id": 5754,
-                "name": "ALGERIA"
-              },
-              {
-                "id": 5926,
-                "name": "ANGOLA"
-              },
-              {
-                "id": 7619,
-                "name": "BENIN"
-              },
-              {
-                "id": 7951,
-                "name": "BOTSWANA"
-              },
-              {
-                "id": 13670,
-                "name": "BURKINA FASO"
-              },
-              {
-                "id": 13775,
-                "name": "BURUNDI"
-              },
-              {
-                "id": 14077,
-                "name": "CAMEROON"
-              },
-              {
-                "id": 14515,
-                "name": "CAPE VERDE"
-              },
-              {
-                "id": 14575,
-                "name": "CENTRAL AFRICAN REPUBLIC"
-              },
-              {
-                "id": 14615,
-                "name": "CHAD"
-              },
-              {
-                "id": 18866,
-                "name": "COMOROS"
-              },
-              {
-                "id": 18888,
-                "name": "CONGO"
-              },
-              {
-                "id": 19083,
-                "name": "CÔTE D'IVOIRE"
-              },
-              {
-                "id": 19494,
-                "name": "DEMOCRATIC REPUBLIC OF THE CONGO"
-              },
-              {
-                "id": 21220,
-                "name": "EQUATORIAL GUINEA"
-              },
-              {
-                "id": 21254,
-                "name": "ERITREA"
-              },
-              {
-                "id": 21327,
-                "name": "ETHIOPIA"
-              },
-              {
-                "id": 21567,
-                "name": "GABON"
-              },
-              {
-                "id": 21640,
-                "name": "GAMBIA"
-              },
-              {
-                "id": 21702,
-                "name": "GHANA"
-              },
-              {
-                "id": 22432,
-                "name": "GUINEA"
-              },
-              {
-                "id": 22488,
-                "name": "GUINEA-BISSAU"
-              },
-              {
-                "id": 28221,
-                "name": "KENYA"
-              },
-              {
-                "id": 28622,
-                "name": "LESOTHO"
-              },
-              {
-                "id": 28654,
-                "name": "LIBERIA"
-              },
-              {
-                "id": 28743,
-                "name": "MADAGASCAR"
-              },
-              {
-                "id": 29004,
-                "name": "MALAWI"
-              },
-              {
-                "id": 29203,
-                "name": "MALI"
-              },
-              {
-                "id": 29428,
-                "name": "MAURITANIA"
-              },
-              {
-                "id": 29509,
-                "name": "MAURITIUS"
-              },
-              {
-                "id": 32259,
-                "name": "MOZAMBIQUE"
-              },
-              {
-                "id": 32746,
-                "name": "NAMIBIA"
-              },
-              {
-                "id": 33261,
-                "name": "NIGER"
-              },
-              {
-                "id": 33319,
-                "name": "NIGERIA"
-              },
-              {
-                "id": 35892,
-                "name": "RWANDA"
-              },
-              {
-                "id": 36070,
-                "name": "SAO TOME AND PRINCIPE"
-              },
-              {
-                "id": 36141,
-                "name": "SENEGAL"
-              },
-              {
-                "id": 36228,
-                "name": "SEYCHELLES"
-              },
-              {
-                "id": 36229,
-                "name": "SIERRA LEONE"
-              },
-              {
-                "id": 36435,
-                "name": "SOUTH AFRICA"
-              },
-              {
-                "id": 36508,
-                "name": "SOUTH SUDAN"
-              },
-              {
-                "id": 36769,
-                "name": "SWAZILAND"
-              },
-              {
-                "id": 37814,
-                "name": "TOGO"
-              },
-              {
-                "id": 38471,
-                "name": "UGANDA"
-              },
-              {
-                "id": 38636,
-                "name": "TANZANIA"
-              },
-              {
-                "id": 43844,
-                "name": "ZAMBIA"
-              },
-              {
-                "id": 43938,
-                "name": "ZIMBABWE"
-              }
-            ]
-          },
-          {
-            "id": 4946,
-            "name": "AMRO",
-            "child": [
-              {
-                "id": 6126,
-                "name": ""
-              },
-              {
-                "id": 6127,
-                "name": "ANGUILLA"
-              },
-              {
-                "id": 6141,
-                "name": "ANTIGUA AND BARBUDA"
-              },
-              {
-                "id": 6167,
-                "name": "ARGENTINA"
-              },
-              {
-                "id": 6728,
-                "name": "ARUBA"
-              },
-              {
-                "id": 7380,
-                "name": "BAHAMAS"
-              },
-              {
-                "id": 7565,
-                "name": "BARBADOS"
-              },
-              {
-                "id": 7602,
-                "name": "BELIZE"
-              },
-              {
-                "id": 7722,
-                "name": "BERMUDA"
-              },
-              {
-                "id": 8019,
-                "name": "BRAZIL"
-              },
-              {
-                "id": 13638,
-                "name": "BRITISH VIRGIN ISLANDS"
-              },
-              {
-                "id": 14269,
-                "name": "CANADA"
-              },
-              {
-                "id": 14552,
-                "name": "CAYMAN ISLANDS"
-              },
-              {
-                "id": 14714,
-                "name": "CHILE"
-              },
-              {
-                "id": 17696,
-                "name": "COLOMBIA"
-              },
-              {
-                "id": 18986,
-                "name": "COSTA RICA"
-              },
-              {
-                "id": 19085,
-                "name": "CUBA"
-              },
-              {
-                "id": 20043,
-                "name": "DOMINICA"
-              },
-              {
-                "id": 20070,
-                "name": "DOMINICAN REPUBLIC"
-              },
-              {
-                "id": 20293,
-                "name": "ECUADOR"
-              },
-              {
-                "id": 20908,
-                "name": "EL SALVADOR"
-              },
-              {
-                "id": 21498,
-                "name": "FRENCH GUIANA"
-              },
-              {
-                "id": 21940,
-                "name": "GRENADA"
-              },
-              {
-                "id": 21963,
-                "name": "GUADELOUPE"
-              },
-              {
-                "id": 22057,
-                "name": "GUATEMALA"
-              },
-              {
-                "id": 22518,
-                "name": "GUYANA"
-              },
-              {
-                "id": 22566,
-                "name": "HAITI"
-              },
-              {
-                "id": 22648,
-                "name": "HONDURAS"
-              },
-              {
-                "id": 24878,
-                "name": "JAMAICA"
-              },
-              {
-                "id": 29384,
-                "name": "MARTINIQUE"
-              },
-              {
-                "id": 29544,
-                "name": "MEXICO"
-              },
-              {
-                "id": 32150,
-                "name": "MONTSERRAT"
-              },
-              {
-                "id": 32941,
-                "name": "NETHERLANDS ANTILLES"
-              },
-              {
-                "id": 33073,
-                "name": "NICARAGUA"
-              },
-              {
-                "id": 34551,
-                "name": "PANAMA"
-              },
-              {
-                "id": 34811,
-                "name": "PARAGUAY"
-              },
-              {
-                "id": 35083,
-                "name": "PERU"
-              },
-              {
-                "id": 35464,
-                "name": "PUERTO RICO"
-              },
-              {
-                "id": 35954,
-                "name": "SAINT KITTS AND NEVIS"
-              },
-              {
-                "id": 35998,
-                "name": "SAINT LUCIA"
-              },
-              {
-                "id": 36027,
-                "name": "SAINT VINCENT AND THE GRENADINES"
-              },
-              {
-                "id": 36687,
-                "name": "SURINAME"
-              },
-              {
-                "id": 37887,
-                "name": "TRINIDAD AND TOBAGO"
-              },
-              {
-                "id": 38419,
-                "name": "TURKS AND CAICOS ISLANDS"
-              },
-              {
-                "id": 38926,
-                "name": "USA"
-              },
-              {
-                "id": 42227,
-                "name": "UNITED STATES VIRGIN ISLANDS"
-              },
-              {
-                "id": 42239,
-                "name": "URUGUAY"
-              }
-            ]
-          },
-          {
-            "id": 4947,
-            "name": "EMRO",
-            "child": [
-              {
-                "id": 4953,
-                "name": ""
-              },
-              {
-                "id": 4954,
-                "name": "AFGHANISTAN"
-              },
-              {
-                "id": 7458,
-                "name": "BAHRAIN"
-              },
-              {
-                "id": 20028,
-                "name": "DJIBOUTI"
-              },
-              {
-                "id": 20567,
-                "name": "EGYPT"
-              },
-              {
-                "id": 24293,
-                "name": "IRAN"
-              },
-              {
-                "id": 24710,
-                "name": "IRAQ"
-              },
-              {
-                "id": 28173,
-                "name": "JORDAN"
-              },
-              {
-                "id": 28382,
-                "name": "KUWAIT"
-              },
-              {
-                "id": 28582,
-                "name": "LEBANON"
-              },
-              {
-                "id": 28691,
-                "name": "LIBYA"
-              },
-              {
-                "id": 32160,
-                "name": "MOROCCO"
-              },
-              {
-                "id": 34203,
-                "name": "OMAN"
-              },
-              {
-                "id": 34288,
-                "name": "PAKISTAN"
-              },
-              {
-                "id": 35702,
-                "name": "QATAR"
-              },
-              {
-                "id": 36078,
-                "name": "SAUDI ARABIA"
-              },
-              {
-                "id": 36288,
-                "name": "SOMALIA"
-              },
-              {
-                "id": 36651,
-                "name": "SUDAN"
-              },
-              {
-                "id": 36669,
-                "name": "SUDAN"
-              },
-              {
-                "id": 36790,
-                "name": "SYRIA"
-              },
-              {
-                "id": 37934,
-                "name": "TUNISIA"
-              },
-              {
-                "id": 38610,
-                "name": "UNITED ARAB EMIRATES"
-              },
-              {
-                "id": 43465,
-                "name": "YEMEN"
-              }
-            ]
-          },
-          {
-            "id": 4948,
-            "name": "EURO",
-            "child": [
-              {
-                "id": 5751,
-                "name": ""
-              },
-              {
-                "id": 5752,
-                "name": "ALBANIA"
-              },
-              {
-                "id": 5925,
-                "name": "ANDORRA"
-              },
-              {
-                "id": 6727,
-                "name": "ARMENIA"
-              },
-              {
-                "id": 7378,
-                "name": "AUSTRIA"
-              },
-              {
-                "id": 7379,
-                "name": "AZERBAIJAN"
-              },
-              {
-                "id": 7600,
-                "name": "BELARUS"
-              },
-              {
-                "id": 7601,
-                "name": "BELGIUM"
-              },
-              {
-                "id": 7950,
-                "name": "BOSNIA AND HERZEGOVINA"
-              },
-              {
-                "id": 13669,
-                "name": "BULGARIA"
-              },
-              {
-                "id": 19084,
-                "name": "CROATIA"
-              },
-              {
-                "id": 19286,
-                "name": "CYPRUS"
-              },
-              {
-                "id": 19287,
-                "name": "CZECH REPUBLIC"
-              },
-              {
-                "id": 20027,
-                "name": "DENMARK"
-              },
-              {
-                "id": 21326,
-                "name": "ESTONIA"
-              },
-              {
-                "id": 21496,
-                "name": "FINLAND"
-              },
-              {
-                "id": 21497,
-                "name": "FRANCE"
-              },
-              {
-                "id": 21700,
-                "name": "GEORGIA"
-              },
-              {
-                "id": 21701,
-                "name": "GERMANY"
-              },
-              {
-                "id": 21939,
-                "name": "GREECE"
-              },
-              {
-                "id": 23003,
-                "name": "HUNGARY"
-              },
-              {
-                "id": 23004,
-                "name": "ICELAND"
-              },
-              {
-                "id": 24875,
-                "name": "IRELAND"
-              },
-              {
-                "id": 24876,
-                "name": "ISRAEL"
-              },
-              {
-                "id": 24877,
-                "name": "ITALY"
-              },
-              {
-                "id": 28220,
-                "name": "KAZAKHSTAN"
-              },
-              {
-                "id": 28399,
-                "name": "KYRGYZSTAN"
-              },
-              {
-                "id": 28581,
-                "name": "LATVIA"
-              },
-              {
-                "id": 28740,
-                "name": "LIECHTENSTEIN"
-              },
-              {
-                "id": 28741,
-                "name": "LITHUANIA"
-              },
-              {
-                "id": 28742,
-                "name": "LUXEMBOURG"
-              },
-              {
-                "id": 29282,
-                "name": "MALTA"
-              },
-              {
-                "id": 32093,
-                "name": "MONACO"
-              },
-              {
-                "id": 32940,
-                "name": "NETHERLANDS"
-              },
-              {
-                "id": 34202,
-                "name": "NORWAY"
-              },
-              {
-                "id": 35462,
-                "name": "POLAND"
-              },
-              {
-                "id": 35463,
-                "name": "PORTUGAL"
-              },
-              {
-                "id": 35776,
-                "name": "MOLDOVA"
-              },
-              {
-                "id": 35777,
-                "name": "ROMANIA"
-              },
-              {
-                "id": 35778,
-                "name": "RUSSIA"
-              },
-              {
-                "id": 36069,
-                "name": "SAN MARINO"
-              },
-              {
-                "id": 36227,
-                "name": "SERBIA"
-              },
-              {
-                "id": 36254,
-                "name": "SLOVAKIA"
-              },
-              {
-                "id": 36255,
-                "name": "SLOVENIA"
-              },
-              {
-                "id": 36608,
-                "name": "SPAIN"
-              },
-              {
-                "id": 36783,
-                "name": "SWEDEN"
-              },
-              {
-                "id": 36898,
-                "name": "TAJIKISTAN"
-              },
-              {
-                "id": 37772,
-                "name": "MACEDONIA"
-              },
-              {
-                "id": 38248,
-                "name": "TURKEY"
-              },
-              {
-                "id": 38345,
-                "name": "TURKMENISTAN"
-              },
-              {
-                "id": 38609,
-                "name": "UKRAINE"
-              },
-              {
-                "id": 38635,
-                "name": "UNITED KINGDOM"
-              },
-              {
-                "id": 42295,
-                "name": "UZBEKISTAN"
-              }
-            ]
-          },
-          {
-            "id": 4949,
-            "name": "HQ",
-            "child": [
-              {
-                "id": 36784,
-                "name": ""
-              },
-              {
-                "id": 36785,
-                "name": "SWITZERLAND"
-              }
-            ]
-          },
-          {
-            "id": 4950,
-            "name": "PAHO",
-            "child": [
-              {
-                "id": 7819,
-                "name": ""
-              },
-              {
-                "id": 7820,
-                "name": "BOLIVIA"
-              },
-              {
-                "id": 42316,
-                "name": "VENEZUELA"
-              }
-            ]
-          },
-          {
-            "id": 4951,
-            "name": "SEARO",
-            "child": [
-              {
-                "id": 7475,
-                "name": ""
-              },
-              {
-                "id": 7476,
-                "name": "BANGLADESH"
-              },
-              {
-                "id": 7757,
-                "name": "BHUTAN"
-              },
-              {
-                "id": 19288,
-                "name": "NORTH KOREA"
-              },
-              {
-                "id": 23005,
-                "name": "INDIA"
-              },
-              {
-                "id": 23728,
-                "name": "INDONESIA"
-              },
-              {
-                "id": 29202,
-                "name": "MALDIVES"
-              },
-              {
-                "id": 32385,
-                "name": "MYANMAR"
-              },
-              {
-                "id": 32853,
-                "name": "NEPAL"
-              },
-              {
-                "id": 36609,
-                "name": "SRI LANKA"
-              },
-              {
-                "id": 36966,
-                "name": "THAILAND"
-              },
-              {
-                "id": 37773,
-                "name": "TIMOR-LESTE"
-              }
-            ]
-          },
-          {
-            "id": 4952,
-            "name": "WPRO",
-            "child": [
-              {
-                "id": 5896,
-                "name": ""
-              },
-              {
-                "id": 5897,
-                "name": "AMERICAN SAMOA"
-              },
-              {
-                "id": 6729,
-                "name": "AUSTRALIA"
-              },
-              {
-                "id": 13655,
-                "name": "BRUNEI DARUSSALAM"
-              },
-              {
-                "id": 13849,
-                "name": "CAMBODIA"
-              },
-              {
-                "id": 14793,
-                "name": "CHINA"
-              },
-              {
-                "id": 18939,
-                "name": "COOK ISLANDS"
-              },
-              {
-                "id": 21431,
-                "name": "FIJI"
-              },
-              {
-                "id": 21550,
-                "name": "FRENCH POLYNESIA"
-              },
-              {
-                "id": 21998,
-                "name": "GUAM"
-              },
-              {
-                "id": 24915,
-                "name": "JAPAN"
-              },
-              {
-                "id": 28308,
-                "name": "KIRIBATI"
-              },
-              {
-                "id": 28400,
-                "name": "LAOS"
-              },
-              {
-                "id": 28401,
-                "name": "LAOS"
-              },
-              {
-                "id": 29039,
-                "name": "MALAYSIA"
-              },
-              {
-                "id": 29283,
-                "name": "MARSHALL ISLANDS"
-              },
-              {
-                "id": 32079,
-                "name": "MICRONESIA"
-              },
-              {
-                "id": 32094,
-                "name": "MONGOLIA"
-              },
-              {
-                "id": 32809,
-                "name": "NAURU"
-              },
-              {
-                "id": 32958,
-                "name": "NEW CALEDONIA"
-              },
-              {
-                "id": 33029,
-                "name": "NEW ZEALAND"
-              },
-              {
-                "id": 34165,
-                "name": "NIUE"
-              },
-              {
-                "id": 34188,
-                "name": "NORTHERN MARIANA ISLANDS"
-              },
-              {
-                "id": 34501,
-                "name": "PALAU"
-              },
-              {
-                "id": 34653,
-                "name": "PAPUA NEW GUINEA"
-              },
-              {
-                "id": 35327,
-                "name": "PHILIPPINES"
-              },
-              {
-                "id": 35441,
-                "name": "PITCAIRN ISLANDS"
-              },
-              {
-                "id": 35729,
-                "name": "REPUBLIC OF KOREA"
-              },
-              {
-                "id": 36052,
-                "name": "SAMOA"
-              },
-              {
-                "id": 36253,
-                "name": "SINGAPORE"
-              },
-              {
-                "id": 36256,
-                "name": "SOLOMON ISLANDS"
-              },
-              {
-                "id": 37859,
-                "name": "TOKELAU"
-              },
-              {
-                "id": 37870,
-                "name": "TONGA"
-              },
-              {
-                "id": 38442,
-                "name": "TUVALU"
-              },
-              {
-                "id": 42296,
-                "name": "VANUATU"
-              },
-              {
-                "id": 42710,
-                "name": "VIET NAM"
-              },
-              {
-                "id": 43448,
-                "name": "WALLIS AND FUTUNA"
+                "id": 4944,
+                "name": "",
+                "child": null
+              },
+              {
+                "id": 4945,
+                "name": "AFRO",
+                "child": [
+                  {
+                    "id": 5753,
+                    "name": ""
+                  },
+                  {
+                    "id": 5754,
+                    "name": "ALGERIA"
+                  },
+                  {
+                    "id": 5926,
+                    "name": "ANGOLA"
+                  },
+                  {
+                    "id": 7619,
+                    "name": "BENIN"
+                  },
+                  {
+                    "id": 7951,
+                    "name": "BOTSWANA"
+                  },
+                  {
+                    "id": 13670,
+                    "name": "BURKINA FASO"
+                  },
+                  {
+                    "id": 13775,
+                    "name": "BURUNDI"
+                  },
+                  {
+                    "id": 14077,
+                    "name": "CAMEROON"
+                  },
+                  {
+                    "id": 14515,
+                    "name": "CAPE VERDE"
+                  },
+                  {
+                    "id": 14575,
+                    "name": "CENTRAL AFRICAN REPUBLIC"
+                  },
+                  {
+                    "id": 14615,
+                    "name": "CHAD"
+                  },
+                  {
+                    "id": 18866,
+                    "name": "COMOROS"
+                  },
+                  {
+                    "id": 18888,
+                    "name": "CONGO"
+                  },
+                  {
+                    "id": 19083,
+                    "name": "CÔTE D'IVOIRE"
+                  },
+                  {
+                    "id": 19494,
+                    "name": "DEMOCRATIC REPUBLIC OF THE CONGO"
+                  },
+                  {
+                    "id": 21220,
+                    "name": "EQUATORIAL GUINEA"
+                  },
+                  {
+                    "id": 21254,
+                    "name": "ERITREA"
+                  },
+                  {
+                    "id": 21327,
+                    "name": "ETHIOPIA"
+                  },
+                  {
+                    "id": 21567,
+                    "name": "GABON"
+                  },
+                  {
+                    "id": 21640,
+                    "name": "GAMBIA"
+                  },
+                  {
+                    "id": 21702,
+                    "name": "GHANA"
+                  },
+                  {
+                    "id": 22432,
+                    "name": "GUINEA"
+                  },
+                  {
+                    "id": 22488,
+                    "name": "GUINEA-BISSAU"
+                  },
+                  {
+                    "id": 28221,
+                    "name": "KENYA"
+                  },
+                  {
+                    "id": 28622,
+                    "name": "LESOTHO"
+                  },
+                  {
+                    "id": 28654,
+                    "name": "LIBERIA"
+                  },
+                  {
+                    "id": 28743,
+                    "name": "MADAGASCAR"
+                  },
+                  {
+                    "id": 29004,
+                    "name": "MALAWI"
+                  },
+                  {
+                    "id": 29203,
+                    "name": "MALI"
+                  },
+                  {
+                    "id": 29428,
+                    "name": "MAURITANIA"
+                  },
+                  {
+                    "id": 29509,
+                    "name": "MAURITIUS"
+                  },
+                  {
+                    "id": 32259,
+                    "name": "MOZAMBIQUE"
+                  },
+                  {
+                    "id": 32746,
+                    "name": "NAMIBIA"
+                  },
+                  {
+                    "id": 33261,
+                    "name": "NIGER"
+                  },
+                  {
+                    "id": 33319,
+                    "name": "NIGERIA"
+                  },
+                  {
+                    "id": 35892,
+                    "name": "RWANDA"
+                  },
+                  {
+                    "id": 36070,
+                    "name": "SAO TOME AND PRINCIPE"
+                  },
+                  {
+                    "id": 36141,
+                    "name": "SENEGAL"
+                  },
+                  {
+                    "id": 36228,
+                    "name": "SEYCHELLES"
+                  },
+                  {
+                    "id": 36229,
+                    "name": "SIERRA LEONE"
+                  },
+                  {
+                    "id": 36435,
+                    "name": "SOUTH AFRICA"
+                  },
+                  {
+                    "id": 36508,
+                    "name": "SOUTH SUDAN"
+                  },
+                  {
+                    "id": 36769,
+                    "name": "SWAZILAND"
+                  },
+                  {
+                    "id": 37814,
+                    "name": "TOGO"
+                  },
+                  {
+                    "id": 38471,
+                    "name": "UGANDA"
+                  },
+                  {
+                    "id": 38636,
+                    "name": "TANZANIA"
+                  },
+                  {
+                    "id": 43844,
+                    "name": "ZAMBIA"
+                  },
+                  {
+                    "id": 43938,
+                    "name": "ZIMBABWE"
+                  }
+                ]
+              },
+              {
+                "id": 4946,
+                "name": "AMRO",
+                "child": [
+                  {
+                    "id": 6126,
+                    "name": ""
+                  },
+                  {
+                    "id": 6127,
+                    "name": "ANGUILLA"
+                  },
+                  {
+                    "id": 6141,
+                    "name": "ANTIGUA AND BARBUDA"
+                  },
+                  {
+                    "id": 6167,
+                    "name": "ARGENTINA"
+                  },
+                  {
+                    "id": 6728,
+                    "name": "ARUBA"
+                  },
+                  {
+                    "id": 7380,
+                    "name": "BAHAMAS"
+                  },
+                  {
+                    "id": 7565,
+                    "name": "BARBADOS"
+                  },
+                  {
+                    "id": 7602,
+                    "name": "BELIZE"
+                  },
+                  {
+                    "id": 7722,
+                    "name": "BERMUDA"
+                  },
+                  {
+                    "id": 8019,
+                    "name": "BRAZIL"
+                  },
+                  {
+                    "id": 13638,
+                    "name": "BRITISH VIRGIN ISLANDS"
+                  },
+                  {
+                    "id": 14269,
+                    "name": "CANADA"
+                  },
+                  {
+                    "id": 14552,
+                    "name": "CAYMAN ISLANDS"
+                  },
+                  {
+                    "id": 14714,
+                    "name": "CHILE"
+                  },
+                  {
+                    "id": 17696,
+                    "name": "COLOMBIA"
+                  },
+                  {
+                    "id": 18986,
+                    "name": "COSTA RICA"
+                  },
+                  {
+                    "id": 19085,
+                    "name": "CUBA"
+                  },
+                  {
+                    "id": 20043,
+                    "name": "DOMINICA"
+                  },
+                  {
+                    "id": 20070,
+                    "name": "DOMINICAN REPUBLIC"
+                  },
+                  {
+                    "id": 20293,
+                    "name": "ECUADOR"
+                  },
+                  {
+                    "id": 20908,
+                    "name": "EL SALVADOR"
+                  },
+                  {
+                    "id": 21498,
+                    "name": "FRENCH GUIANA"
+                  },
+                  {
+                    "id": 21940,
+                    "name": "GRENADA"
+                  },
+                  {
+                    "id": 21963,
+                    "name": "GUADELOUPE"
+                  },
+                  {
+                    "id": 22057,
+                    "name": "GUATEMALA"
+                  },
+                  {
+                    "id": 22518,
+                    "name": "GUYANA"
+                  },
+                  {
+                    "id": 22566,
+                    "name": "HAITI"
+                  },
+                  {
+                    "id": 22648,
+                    "name": "HONDURAS"
+                  },
+                  {
+                    "id": 24878,
+                    "name": "JAMAICA"
+                  },
+                  {
+                    "id": 29384,
+                    "name": "MARTINIQUE"
+                  },
+                  {
+                    "id": 29544,
+                    "name": "MEXICO"
+                  },
+                  {
+                    "id": 32150,
+                    "name": "MONTSERRAT"
+                  },
+                  {
+                    "id": 32941,
+                    "name": "NETHERLANDS ANTILLES"
+                  },
+                  {
+                    "id": 33073,
+                    "name": "NICARAGUA"
+                  },
+                  {
+                    "id": 34551,
+                    "name": "PANAMA"
+                  },
+                  {
+                    "id": 34811,
+                    "name": "PARAGUAY"
+                  },
+                  {
+                    "id": 35083,
+                    "name": "PERU"
+                  },
+                  {
+                    "id": 35464,
+                    "name": "PUERTO RICO"
+                  },
+                  {
+                    "id": 35954,
+                    "name": "SAINT KITTS AND NEVIS"
+                  },
+                  {
+                    "id": 35998,
+                    "name": "SAINT LUCIA"
+                  },
+                  {
+                    "id": 36027,
+                    "name": "SAINT VINCENT AND THE GRENADINES"
+                  },
+                  {
+                    "id": 36687,
+                    "name": "SURINAME"
+                  },
+                  {
+                    "id": 37887,
+                    "name": "TRINIDAD AND TOBAGO"
+                  },
+                  {
+                    "id": 38419,
+                    "name": "TURKS AND CAICOS ISLANDS"
+                  },
+                  {
+                    "id": 38926,
+                    "name": "USA"
+                  },
+                  {
+                    "id": 42227,
+                    "name": "UNITED STATES VIRGIN ISLANDS"
+                  },
+                  {
+                    "id": 42239,
+                    "name": "URUGUAY"
+                  }
+                ]
+              },
+              {
+                "id": 4947,
+                "name": "EMRO",
+                "child": [
+                  {
+                    "id": 4953,
+                    "name": ""
+                  },
+                  {
+                    "id": 4954,
+                    "name": "AFGHANISTAN"
+                  },
+                  {
+                    "id": 7458,
+                    "name": "BAHRAIN"
+                  },
+                  {
+                    "id": 20028,
+                    "name": "DJIBOUTI"
+                  },
+                  {
+                    "id": 20567,
+                    "name": "EGYPT"
+                  },
+                  {
+                    "id": 24293,
+                    "name": "IRAN"
+                  },
+                  {
+                    "id": 24710,
+                    "name": "IRAQ"
+                  },
+                  {
+                    "id": 28173,
+                    "name": "JORDAN"
+                  },
+                  {
+                    "id": 28382,
+                    "name": "KUWAIT"
+                  },
+                  {
+                    "id": 28582,
+                    "name": "LEBANON"
+                  },
+                  {
+                    "id": 28691,
+                    "name": "LIBYA"
+                  },
+                  {
+                    "id": 32160,
+                    "name": "MOROCCO"
+                  },
+                  {
+                    "id": 34203,
+                    "name": "OMAN"
+                  },
+                  {
+                    "id": 34288,
+                    "name": "PAKISTAN"
+                  },
+                  {
+                    "id": 35702,
+                    "name": "QATAR"
+                  },
+                  {
+                    "id": 36078,
+                    "name": "SAUDI ARABIA"
+                  },
+                  {
+                    "id": 36288,
+                    "name": "SOMALIA"
+                  },
+                  {
+                    "id": 36651,
+                    "name": "SUDAN"
+                  },
+                  {
+                    "id": 36669,
+                    "name": "SUDAN"
+                  },
+                  {
+                    "id": 36790,
+                    "name": "SYRIA"
+                  },
+                  {
+                    "id": 37934,
+                    "name": "TUNISIA"
+                  },
+                  {
+                    "id": 38610,
+                    "name": "UNITED ARAB EMIRATES"
+                  },
+                  {
+                    "id": 43465,
+                    "name": "YEMEN"
+                  }
+                ]
+              },
+              {
+                "id": 4948,
+                "name": "EURO",
+                "child": [
+                  {
+                    "id": 5751,
+                    "name": ""
+                  },
+                  {
+                    "id": 5752,
+                    "name": "ALBANIA"
+                  },
+                  {
+                    "id": 5925,
+                    "name": "ANDORRA"
+                  },
+                  {
+                    "id": 6727,
+                    "name": "ARMENIA"
+                  },
+                  {
+                    "id": 7378,
+                    "name": "AUSTRIA"
+                  },
+                  {
+                    "id": 7379,
+                    "name": "AZERBAIJAN"
+                  },
+                  {
+                    "id": 7600,
+                    "name": "BELARUS"
+                  },
+                  {
+                    "id": 7601,
+                    "name": "BELGIUM"
+                  },
+                  {
+                    "id": 7950,
+                    "name": "BOSNIA AND HERZEGOVINA"
+                  },
+                  {
+                    "id": 13669,
+                    "name": "BULGARIA"
+                  },
+                  {
+                    "id": 19084,
+                    "name": "CROATIA"
+                  },
+                  {
+                    "id": 19286,
+                    "name": "CYPRUS"
+                  },
+                  {
+                    "id": 19287,
+                    "name": "CZECH REPUBLIC"
+                  },
+                  {
+                    "id": 20027,
+                    "name": "DENMARK"
+                  },
+                  {
+                    "id": 21326,
+                    "name": "ESTONIA"
+                  },
+                  {
+                    "id": 21496,
+                    "name": "FINLAND"
+                  },
+                  {
+                    "id": 21497,
+                    "name": "FRANCE"
+                  },
+                  {
+                    "id": 21700,
+                    "name": "GEORGIA"
+                  },
+                  {
+                    "id": 21701,
+                    "name": "GERMANY"
+                  },
+                  {
+                    "id": 21939,
+                    "name": "GREECE"
+                  },
+                  {
+                    "id": 23003,
+                    "name": "HUNGARY"
+                  },
+                  {
+                    "id": 23004,
+                    "name": "ICELAND"
+                  },
+                  {
+                    "id": 24875,
+                    "name": "IRELAND"
+                  },
+                  {
+                    "id": 24876,
+                    "name": "ISRAEL"
+                  },
+                  {
+                    "id": 24877,
+                    "name": "ITALY"
+                  },
+                  {
+                    "id": 28220,
+                    "name": "KAZAKHSTAN"
+                  },
+                  {
+                    "id": 28399,
+                    "name": "KYRGYZSTAN"
+                  },
+                  {
+                    "id": 28581,
+                    "name": "LATVIA"
+                  },
+                  {
+                    "id": 28740,
+                    "name": "LIECHTENSTEIN"
+                  },
+                  {
+                    "id": 28741,
+                    "name": "LITHUANIA"
+                  },
+                  {
+                    "id": 28742,
+                    "name": "LUXEMBOURG"
+                  },
+                  {
+                    "id": 29282,
+                    "name": "MALTA"
+                  },
+                  {
+                    "id": 32093,
+                    "name": "MONACO"
+                  },
+                  {
+                    "id": 32940,
+                    "name": "NETHERLANDS"
+                  },
+                  {
+                    "id": 34202,
+                    "name": "NORWAY"
+                  },
+                  {
+                    "id": 35462,
+                    "name": "POLAND"
+                  },
+                  {
+                    "id": 35463,
+                    "name": "PORTUGAL"
+                  },
+                  {
+                    "id": 35776,
+                    "name": "MOLDOVA"
+                  },
+                  {
+                    "id": 35777,
+                    "name": "ROMANIA"
+                  },
+                  {
+                    "id": 35778,
+                    "name": "RUSSIA"
+                  },
+                  {
+                    "id": 36069,
+                    "name": "SAN MARINO"
+                  },
+                  {
+                    "id": 36227,
+                    "name": "SERBIA"
+                  },
+                  {
+                    "id": 36254,
+                    "name": "SLOVAKIA"
+                  },
+                  {
+                    "id": 36255,
+                    "name": "SLOVENIA"
+                  },
+                  {
+                    "id": 36608,
+                    "name": "SPAIN"
+                  },
+                  {
+                    "id": 36783,
+                    "name": "SWEDEN"
+                  },
+                  {
+                    "id": 36898,
+                    "name": "TAJIKISTAN"
+                  },
+                  {
+                    "id": 37772,
+                    "name": "MACEDONIA"
+                  },
+                  {
+                    "id": 38248,
+                    "name": "TURKEY"
+                  },
+                  {
+                    "id": 38345,
+                    "name": "TURKMENISTAN"
+                  },
+                  {
+                    "id": 38609,
+                    "name": "UKRAINE"
+                  },
+                  {
+                    "id": 38635,
+                    "name": "UNITED KINGDOM"
+                  },
+                  {
+                    "id": 42295,
+                    "name": "UZBEKISTAN"
+                  }
+                ]
+              },
+              {
+                "id": 4949,
+                "name": "HQ",
+                "child": [
+                  {
+                    "id": 36784,
+                    "name": ""
+                  },
+                  {
+                    "id": 36785,
+                    "name": "SWITZERLAND"
+                  }
+                ]
+              },
+              {
+                "id": 4950,
+                "name": "PAHO",
+                "child": [
+                  {
+                    "id": 7819,
+                    "name": ""
+                  },
+                  {
+                    "id": 7820,
+                    "name": "BOLIVIA"
+                  },
+                  {
+                    "id": 42316,
+                    "name": "VENEZUELA"
+                  }
+                ]
+              },
+              {
+                "id": 4951,
+                "name": "SEARO",
+                "child": [
+                  {
+                    "id": 7475,
+                    "name": ""
+                  },
+                  {
+                    "id": 7476,
+                    "name": "BANGLADESH"
+                  },
+                  {
+                    "id": 7757,
+                    "name": "BHUTAN"
+                  },
+                  {
+                    "id": 19288,
+                    "name": "NORTH KOREA"
+                  },
+                  {
+                    "id": 23005,
+                    "name": "INDIA"
+                  },
+                  {
+                    "id": 23728,
+                    "name": "INDONESIA"
+                  },
+                  {
+                    "id": 29202,
+                    "name": "MALDIVES"
+                  },
+                  {
+                    "id": 32385,
+                    "name": "MYANMAR"
+                  },
+                  {
+                    "id": 32853,
+                    "name": "NEPAL"
+                  },
+                  {
+                    "id": 36609,
+                    "name": "SRI LANKA"
+                  },
+                  {
+                    "id": 36966,
+                    "name": "THAILAND"
+                  },
+                  {
+                    "id": 37773,
+                    "name": "TIMOR-LESTE"
+                  }
+                ]
+              },
+              {
+                "id": 4952,
+                "name": "WPRO",
+                "child": [
+                  {
+                    "id": 5896,
+                    "name": ""
+                  },
+                  {
+                    "id": 5897,
+                    "name": "AMERICAN SAMOA"
+                  },
+                  {
+                    "id": 6729,
+                    "name": "AUSTRALIA"
+                  },
+                  {
+                    "id": 13655,
+                    "name": "BRUNEI DARUSSALAM"
+                  },
+                  {
+                    "id": 13849,
+                    "name": "CAMBODIA"
+                  },
+                  {
+                    "id": 14793,
+                    "name": "CHINA"
+                  },
+                  {
+                    "id": 18939,
+                    "name": "COOK ISLANDS"
+                  },
+                  {
+                    "id": 21431,
+                    "name": "FIJI"
+                  },
+                  {
+                    "id": 21550,
+                    "name": "FRENCH POLYNESIA"
+                  },
+                  {
+                    "id": 21998,
+                    "name": "GUAM"
+                  },
+                  {
+                    "id": 24915,
+                    "name": "JAPAN"
+                  },
+                  {
+                    "id": 28308,
+                    "name": "KIRIBATI"
+                  },
+                  {
+                    "id": 28400,
+                    "name": "LAOS"
+                  },
+                  {
+                    "id": 28401,
+                    "name": "LAOS"
+                  },
+                  {
+                    "id": 29039,
+                    "name": "MALAYSIA"
+                  },
+                  {
+                    "id": 29283,
+                    "name": "MARSHALL ISLANDS"
+                  },
+                  {
+                    "id": 32079,
+                    "name": "MICRONESIA"
+                  },
+                  {
+                    "id": 32094,
+                    "name": "MONGOLIA"
+                  },
+                  {
+                    "id": 32809,
+                    "name": "NAURU"
+                  },
+                  {
+                    "id": 32958,
+                    "name": "NEW CALEDONIA"
+                  },
+                  {
+                    "id": 33029,
+                    "name": "NEW ZEALAND"
+                  },
+                  {
+                    "id": 34165,
+                    "name": "NIUE"
+                  },
+                  {
+                    "id": 34188,
+                    "name": "NORTHERN MARIANA ISLANDS"
+                  },
+                  {
+                    "id": 34501,
+                    "name": "PALAU"
+                  },
+                  {
+                    "id": 34653,
+                    "name": "PAPUA NEW GUINEA"
+                  },
+                  {
+                    "id": 35327,
+                    "name": "PHILIPPINES"
+                  },
+                  {
+                    "id": 35441,
+                    "name": "PITCAIRN ISLANDS"
+                  },
+                  {
+                    "id": 35729,
+                    "name": "REPUBLIC OF KOREA"
+                  },
+                  {
+                    "id": 36052,
+                    "name": "SAMOA"
+                  },
+                  {
+                    "id": 36253,
+                    "name": "SINGAPORE"
+                  },
+                  {
+                    "id": 36256,
+                    "name": "SOLOMON ISLANDS"
+                  },
+                  {
+                    "id": 37859,
+                    "name": "TOKELAU"
+                  },
+                  {
+                    "id": 37870,
+                    "name": "TONGA"
+                  },
+                  {
+                    "id": 38442,
+                    "name": "TUVALU"
+                  },
+                  {
+                    "id": 42296,
+                    "name": "VANUATU"
+                  },
+                  {
+                    "id": 42710,
+                    "name": "VIET NAM"
+                  },
+                  {
+                    "id": 43448,
+                    "name": "WALLIS AND FUTUNA"
+                  }
+                ]
               }
             ]
           }
         ]
       }
-    ]
-  }
-};
+    };
 
-var emergencydata= {
-  "data": {
-    "incidents": [
-      {
-        "id": 237,
-        "name": "Global Cholera 2017 (Demo)"
-      },
-      {
-        "id": 252,
-        "name": "Country B Yellow Fever 2017 (Demo)"
-      },
-      {
-        "id": 281,
-        "name": "Country D Volcano 2017 (Demo)"
-      },
-      {
-        "id": 283,
-        "name": "Country C Malaria 2016"
-      },
-      {
-        "id": 284,
-        "name": "Country E Hepatitis 2016"
-      },
-      {
-        "id": 285,
-        "name": "Country F Dengue Fever"
-      },
-      {
-        "id": 288,
-        "name": "Country G Floods"
-      },
-      {
-        "id": 289,
-        "name": "Country H Food Insecurity Crisis"
-      },
-      {
-        "id": 290,
-        "name": "Country I Unknown Jaundice"
-      },
-      {
-        "id": 293,
-        "name": "An ungraded emregency"
+    var emergencydata = {
+      "data": {
+        "incidents": [
+          {
+            "id": 237,
+            "name": "Global Cholera 2017 (Demo)"
+          },
+          {
+            "id": 252,
+            "name": "Country B Yellow Fever 2017 (Demo)"
+          },
+          {
+            "id": 281,
+            "name": "Country D Volcano 2017 (Demo)"
+          },
+          {
+            "id": 283,
+            "name": "Country C Malaria 2016"
+          },
+          {
+            "id": 284,
+            "name": "Country E Hepatitis 2016"
+          },
+          {
+            "id": 285,
+            "name": "Country F Dengue Fever"
+          },
+          {
+            "id": 288,
+            "name": "Country G Floods"
+          },
+          {
+            "id": 289,
+            "name": "Country H Food Insecurity Crisis"
+          },
+          {
+            "id": 290,
+            "name": "Country I Unknown Jaundice"
+          },
+          {
+            "id": 293,
+            "name": "An ungraded emregency"
+          }
+        ]
       }
-    ]
-  }
-};
+    };
 
-// loading the user roles in the menu items
-$.each(userrolesList.userroles, function (index, value) {
-    $('select[name="Position"]').append('<option value="' + value.userrole.name + '">' + value.userrole.name + '</option>');
-});
+    // loading the user roles in the menu items
+    $.each(userrolesList.userroles, function (index, value) {
+      $('select[name="Position"]').append('<option value="' + value.userrole.name + '">' + value.userrole.name + '</option>');
+    });
 
-// loading the regions in the menu items
-$.each(countrylist.data.boardlistitems[0].child, function (index, value) {		  
-	$('select[name="regions"]').append('<option value="' + value.id + '">' + value.name + '</option>');
-});
+    // loading the regions in the menu items
+    $.each(countrylist.data.boardlistitems[0].child, function (index, value) {
+      $('select[name="regions"]').append('<option value="' + value.id + '">' + value.name + '</option>');
+    });
 
 
-// on change of region the country data loading in the menu items begin
-$('select[name="regions"]').on('change', function()
-{
+    // on change of region the country data loading in the menu items begin
+    $('select[name="regions"]').on('change', function () {
 
-	$('select[name="country"]').empty()
-	.append('<option selected="selected" value="S">Select Country</option>')
+      $('select[name="country"]').empty()
+        .append('<option selected="selected" value="S">Select Country</option>')
 
-	var selectID = this.value.toString();
-	if(selectID ==="A")
-	{
-		loadAllCountry();	
-	}
-	else
-	{
-		var selectRegionData=  countrylist.data.boardlistitems[0].child.filter(function(data){
-			return data.id.toString() === selectID;
-    });	
-    
-    
-
-    
-		if(selectRegionData) { 
-   
-       ele.safeproperty = {key:"region",value:{name:selectRegionData[0].name,
-        id:selectRegionData[0].id,
-        child:selectRegionData[0].child}}
-      $.each(selectRegionData[0].child, function (index, value) {		  
-          $('select[name="country"]').append('<option value="' + value.id + '">' + value.name + '</option>');
+      var selectID = this.value.toString();
+      if (selectID === "A") {
+        loadAllCountry();
+      }
+      else {
+        var selectRegionData = countrylist.data.boardlistitems[0].child.filter(function (data) {
+          return data.id.toString() === selectID;
         });
+
+
+
+
+        if (selectRegionData) {
+
+          ele.safeproperty = {
+            key: "region", value: {
+              name: selectRegionData[0].name,
+              id: selectRegionData[0].id,
+              child: selectRegionData[0].child
+            }
+          }
+          $.each(selectRegionData[0].child, function (index, value) {
+            $('select[name="country"]').append('<option value="' + value.id + '">' + value.name + '</option>');
+          });
+        }
+      }
+    });
+
+    // on change of region the country data loading in the menu items end
+
+
+    function setDashBoardData(dataLabel, dataVal) {
+
+
+
+      if (dataLabel == 'position') {
+        ele.safeproperty = { key: "position", value: { name: $("#position").val() } };
+      }
+
+
+
+      if (dataLabel == 'country') {
+
+        var data = { id: $("#country").val() };
+
+        data.id = data.id == 'Select Country' ? -1 : data.id;
+        ele.safeproperty = { key: "country", value: { id: data.id } }
+      }
+
+      if (dataLabel == 'emergency') {
+        ele.safeproperty = { key: "emergency", value: { name: dataVal } }
+      }
     }
-}
-});
 
-// on change of region the country data loading in the menu items end
+    function loadAllCountry() {
 
+      var countryList = [];
 
-function setDashBoardData(dataLabel,dataVal) 
-{
-  
-  
-  
-  if(dataLabel == 'position'){
-    ele.safeproperty = {key:"position",value:{name:$("#position").val()}};
-  }
+      $.each(countrylist.data.boardlistitems[0].child, function (index, value) {
+        if (value.child) {
+          $.each(value.child, function (index, value) {
+            $('select[name="country"]').append('<option value="' + value.id + '">' + value.name + '</option>');
 
-  
+            var country = { id: value.id, name: value.name };
+            countryList.push(country);
+          });
+        }
+      });
 
- if(dataLabel == 'country'){
+      ele = document.querySelector(component);
+      ele.safeproperty = { key: "region", value: { name: "All Region", id: -1, child: countryList } }
+    }
 
-  var data = {id: $("#country").val()};
-
-   data.id  = data.id == 'Select Country'? -1 : data.id;
-   ele.safeproperty = {key:"country",value:{id:data.id}}
-  }
-
-  if(dataLabel == 'emergency'){
-    ele.safeproperty = {key:"emergency",value:{name:dataVal}}
-  }
-}
-
-function loadAllCountry()
-{
-  
-  var countryList = [];
-
-	$.each(countrylist.data.boardlistitems[0].child, function (index, value) {
-		if(value.child)
-		{
-			 $.each(value.child, function (index, value) {		  
-				 $('select[name="country"]').append('<option value="' + value.id + '">' + value.name + '</option>');
-          
-         var country = {id:value.id,name:value.name };
-         countryList.push(country);
-        });
-		}
-   });
-
-   ele = document.querySelector(component);
-   ele.safeproperty = {key:"region",value:{name:"All Region",id:-1,child:countryList}}
-}
-
-function componentToShow(compnt){
-
-  
-  component = compnt;
-  ele = document.querySelector(component);
-
-  loadAllCountry();
-
-  setTimeout(() => {
-    if(component == 'app-dashboard1'){
-    component
-     
-       documentReadyThings('app-dashboard1','dashboard1','dashboard2');
-  }
-  if(component == 'app-dashboard2'){
-    component
-   
-       documentReadyThings('app-dashboard2','dashboard2','dashboard1');
-  }
-  }, 10);
- 
-}
-// default loading the country data
-loadAllCountry();
+    function componentToShow(compnt) {
 
 
-// loading the Emergencies data in the select box in the menu items begin
+      component = compnt;
+      ele = document.querySelector(component);
 
-$.each(emergencydata.data.incidents, function (index, value) {		  
-				 $('select[name="Emergencies"]').append('<option value="' + value.id + '">' + value.name + '</option>');
- });
-// loading the Emergencies data in the select box in the menu items end
+      loadAllCountry();
 
-    $(document).ready(function(){
-     
-       documentReadyThings('app-dashboard1','dashboard1','dashboard2');
- 
+      setTimeout(() => {
+        if (component == 'safe-dashboard') {
+          component
+
+          documentReadyThings('safe-dashboard', 'dashboard1', 'dashboard2');
+        }
+        if (component == 'app-dashboard2') {
+          component
+
+          documentReadyThings('app-dashboard2', 'dashboard2', 'dashboard1');
+        }
+      }, 10);
+
+    }
+    // default loading the country data
+    loadAllCountry();
+
+
+    // loading the Emergencies data in the select box in the menu items begin
+
+    $.each(emergencydata.data.incidents, function (index, value) {
+      $('select[name="Emergencies"]').append('<option value="' + value.id + '">' + value.name + '</option>');
+    });
+    // loading the Emergencies data in the select box in the menu items end
+
+    $(document).ready(function () {
+
+      documentReadyThings('safe-dashboard', 'dashboard1', 'dashboard2');
+
     })
 
-   function documentReadyThings(cmpnt,dashboardToshow,dashboardToHide){
+    function documentReadyThings(cmpnt, dashboardToshow, dashboardToHide) {
 
-      $("."+dashboardToshow).css("display","block");
-      $("."+dashboardToHide).css("display","none");
+      $("." + dashboardToshow).css("display", "block");
+      $("." + dashboardToHide).css("display", "none");
 
-      if(dashboardToshow == 'dashboard1'){
-        $("#EmergenciesMenu2").css("display","block");
-        $("#EmergenciesMenu1").css("display","none");
+      if (dashboardToshow == 'dashboard1') {
+        $("#EmergenciesMenu2").css("display", "block");
+        $("#EmergenciesMenu1").css("display", "none");
       }
-      else{
-        $("#EmergenciesMenu2").css("display","none");
-        $("#EmergenciesMenu1").css("display","block");
+      else {
+        $("#EmergenciesMenu2").css("display", "none");
+        $("#EmergenciesMenu1").css("display", "block");
       }
       component = cmpnt;
 
       ele = document.querySelector(component);
-      ele.safeproperty = {key:"position",value:{name:$("#position").val()}}
-      ele.addEventListener("change",function(ev){
-        if(ev.target.id == "country"){
+      ele.safeproperty = { key: "position", value: { name: $("#position").val() } }
+      ele.addEventListener("change", function (ev) {
+        if (ev.target.id == "country") {
 
-          if(ev.target.value != "-1" || ev.target.value !=-1){
+          if (ev.target.value != "-1" || ev.target.value != -1) {
             $("#country").val(ev.target.value);
           }
-          else{
+          else {
             $("#country").val('Select Country');
           }
         }
       });
-    
-    
+
+
     }
-   </script>
- 
- 
-  <script id="scriptcntl" src="assets/js/dashboard1.js" ></script>
+  </script>
+
+  <script id="scriptcntl" src="assets/js/dashboard1.js"></script>
   <script type="text/javascript" src="assets/js/authConfig.js"></script>
   <script type="text/javascript" src="assets/js/ui.js"></script>
   <script type="text/javascript" src="assets/js/authRedirect.js"></script>
   <script type="text/javascript" src="assets/js/graph.js"></script>
+  <script type="text/javascript" src="assets/js/web-element.js"></script>
 </body>
 </html>
