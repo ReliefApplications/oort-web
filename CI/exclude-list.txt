@@ -1,2 +1,4 @@
 angular-app
 CI
+.github
+.gitignore
