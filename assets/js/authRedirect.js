@@ -1,46 +1,46 @@
-const myMSALObj = new Msal.UserAgentApplication(msalConfig);
+// Create the main myMSALObj instance
+// configuration parameters are located at authConfig.js
+const myMSALObj = new msal.PublicClientApplication(msalConfig);
 
-const signInButton = document.getElementById("signIn");
-const signOutButton = document.getElementById('signOut');
+let accessToken;
+let username = "";
 
-function authCallback(error, response) {
-  // TODO
-  //handle redirect response
+// Redirect: once login is successful and redirects with tokens, call Graph API
+myMSALObj.handleRedirectPromise().then(handleResponse).catch(err => {
+    console.error(err);
+});
+
+function handleResponse(resp) {
+    if (resp !== null) {
+        username = resp.account.username;
+        showWelcomeMessage(resp.account);
+    } else {
+        /**
+         * See here for more info on account retrieval:
+         * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-common/docs/Accounts.md
+         */
+        const currentAccounts = myMSALObj.getAllAccounts();
+        if (currentAccounts === null) {
+            signIn();
+        } else if (currentAccounts.length > 1) {
+            // TODO
+            // choose behaviour when multiple accounts logged in
+            console.warn("Multiple accounts detected.");
+        } else if (currentAccounts.length === 1) {
+            username = currentAccounts[0].username;
+            showWelcomeMessage(currentAccounts[0]);
+        }
+    }
 }
 
 function signIn() {
-  myMSALObj.handleRedirectCallback(authCallback);
-  myMSALObj.loginRedirect(loginRequest)
+    myMSALObj.loginRedirect(loginRequest);
 }
 
 function signOut() {
-  myMSALObj.logout();
-}
+    const logoutRequest = {
+        account: myMSALObj.getAccountByUsername(username)
+    };
 
-function callMSGraph(theUrl, accessToken, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-           callback(JSON.parse(this.responseText));
-        }
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous
-    xmlHttp.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-    xmlHttp.send();
-}
-
-function getTokenPopup(request) {
-  return myMSALObj.acquireTokenSilent(request)
-    .catch(error => {
-      console.log(error);
-      console.log("silent token acquisition fails. acquiring token using popup");
-
-      // fallback to interaction when silent call fails
-        return myMSALObj.acquireTokenPopup(request)
-          .then(tokenResponse => {
-            return tokenResponse;
-          }).catch(error => {
-            console.log(error);
-          });
-    });
+    myMSALObj.logout(logoutRequest);
 }

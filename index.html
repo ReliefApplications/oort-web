@@ -5,17 +5,14 @@
 	<title>Atlantis Lite - Bootstrap 4 Admin Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'>
 	
-  <!-- msal.js with a fallback to backup CDN -->
-  <script type="text/javascript" src="https://alcdn.msauth.net/lib/1.2.1/js/msal.js" integrity="sha384-9TV1245fz+BaI+VvCjMYL0YDMElLBwNS84v3mY57pXNOt6xcUYch2QLImaTahcOP" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    if(typeof Msal === 'undefined')document.write(unescape("%3Cscript src='https://alcdn.msftauth.net/lib/1.2.1/js/msal.js' type='text/javascript' integrity='sha384-m/3NDUcz4krpIIiHgpeO0O8uxSghb+lfBTngquAo2Zuy2fEF+YgFeP08PWFo5FiJ' crossorigin='anonymous'%3E%3C/script%3E"));
-  </script>
+  <!-- IE support: add promises polyfill before msal.js  -->
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/bluebird@3.7.2/js/browser/bluebird.min.js"></script>
+  <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.0.0-beta.4/js/msal-browser.js" integrity="sha384-7sxY2tN3GMVE5jXH2RL9AdbO6s46vUh9lUid4yNCHJMUzDoj+0N4ve6rLOmR88yN" crossorigin="anonymous"></script>
 
   <!-- CSS Files -->
   <link rel="shortcut icon" href="#">
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/atlantis.min.css">
-  <link rel="stylesheet" href="assets/css/custom.css">
   <script src="assets/js/font-awesome.js"></script>
 
 </head>
@@ -45,9 +42,10 @@
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
             <li class="nav-item dropdown hidden-caret">
-              <button type="button" id="signIn" class="btn btn-secondary" onclick="signIn()">Sign In</button>
-              <button type="button" id="signOut" class="btn btn-success d-none" onclick="signOut()">Sign Out</button>
-            </li> 
+              <button type="button" id="SignIn" class="btn btn-secondary" onclick="signIn()">
+                Sign In
+              </button>
+            </li>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div onclick="componentToShow('app-dashboard1')" class="avatar-sm d-flex align-items-center">
@@ -1310,7 +1308,6 @@ var emergencydata= {
   }
 };
 
-
 // loading the user roles in the menu items
 $.each(userrolesList.userroles, function (index, value) {
     $('select[name="Position"]').append('<option value="' + value.userrole.name + '">' + value.userrole.name + '</option>');
@@ -1477,9 +1474,8 @@ $.each(emergencydata.data.incidents, function (index, value) {
  
  
   <script id="scriptcntl" src="assets/js/dashboard1.js" ></script>
-  <!-- importing app scripts (load order is important) -->
   <script type="text/javascript" src="assets/js/authConfig.js"></script>
-  <script type="text/javascript" src="assets/js/graphConfig.js"></script>
+  <script type="text/javascript" src="assets/js/ui.js"></script>
   <script type="text/javascript" src="assets/js/authRedirect.js"></script>
   <script type="text/javascript" src="assets/js/graph.js"></script>
 </body>
